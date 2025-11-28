@@ -1,0 +1,48 @@
+
+{% extends "./home_links.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+  <div class="custom-content">
+    <h1>{{ title }}</h1>
+    <p><h3>Please select the Table and then proceed to Get Rules:</h3></p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Get Rules">
+    </form>
+
+    <h2>Rule Results</h2>
+    {{ rule_data.rows|length }} rules found.
+    <table>
+        <thead>
+            <tr>
+                {% for col in rule_data.columns %}
+                    {% if col == 'approved' %}
+                      <input type="button" value="Approve">
+                    {% else %}
+                      <th>{{ col }}</th>
+                    {% endif  %}
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in rule_data.rows %}
+                <tr>
+                      {% for col in row %}
+                        <td>{{ col }}</td>
+                      {% endfor %}
+                   
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
+
+
+{% endblock %}
